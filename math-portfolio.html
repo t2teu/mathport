@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus' Math Journey</title>
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: rgba(255, 255, 255, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(58, 134, 255, 0.1), rgba(131, 56, 236, 0.1));
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .profile-pic {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--dark);
+            margin-bottom: 30px;
+        }
+        
+        .hero-description {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(58, 134, 255, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(58, 134, 255, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-left: 15px;
+            box-shadow: none;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* About Section */
+        section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: var(--dark);
+        }
+        
+        .section-title span {
+            color: var(--primary);
+        }
+        
+        /* Notes Section */
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .note-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .note-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .note-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+        }
+        
+        .note-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        
+        .note-date {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .note-content {
+            padding: 20px;
+        }
+        
+        .note-preview {
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .note-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tag {
+            padding: 5px 15px;
+            background-color: rgba(58, 134, 255, 0.1);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .note-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px 20px;
+        }
+        
+        .read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .read-more:hover {
+            color: var(--secondary);
+        }
+        
+        .arrow {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .read-more:hover .arrow {
+            transform: translateX(5px);
+        }
+        
+        /* Image Grid */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .image-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .image-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .grid-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .image-caption {
+            padding: 10px;
+            background: white;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-col {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 20px;
+            }
+            
+            .profile-pic {
+                width: 250px;
+                height: 250px;
+                margin-bottom: 30px;
+            }
+            
+            .nav-container {
+                padding: 15px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Matheus<span>Souza</span></a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#notes">Notes</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Here's my math journey over the past semester!</h1>
+                    <h2 class="hero-subtitle">Exploring the Beauty of Mathematics</h2>
+                    <p class="hero-description">
+                        Hello! My name is Matheus Souza, a CS major that loves to combine my coding skills with creative works like games and art!
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#notes" class="btn">"Sharing" Slides</a>
+                        <a href="#gallery" class="btn btn-secondary">"Comprehensive" Slides</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="Screenshot 2025-05-18 at 11.46.40 PM.png" alt="Profile Picture" class="profile-pic">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notes Section -->
+    <section id="notes">
+        <div class="container">
+            <h2 class="section-title">Sharing <span>Slides</span></h2>
+            <div class="image-grid">
+                <!-- Image 1 -->
+                <div class="image-item">
+                    <img src="bike.png" alt="Bike" class="grid-img">
+                    <div class="image-caption">Biking</div>
+                </div>
+
+                <!-- Image 2 -->
+                <div class="image-item">
+                    <img src="bodo.png" alt="Bodo" class="grid-img">
+                    <div class="image-caption">Bodo</div>
+                </div>
+
+                <!-- Image 3 -->
+                <div class="image-item">
+                    <img src="coffee.png" alt="Coffee" class="grid-img">
+                    <div class="image-caption">Coffee Break</div>
+                </div>
+
+                <!-- Image 4 -->
+                <div class="image-item">
+                    <img src="Feynman.png" alt="Feynman" class="grid-img">
+                    <div class="image-caption">Feynman Method</div>
+                </div>
+
+                <!-- Image 5 -->
+                <div class="image-item">
+                    <img src="finlit.png" alt="Financial Literacy" class="grid-img">
+                    <div class="image-caption">Financial Literacy</div>
+                </div>
+
+                <!-- Image 6 -->
+                <div class="image-item">
+                    <img src="life.png" alt="Life" class="grid-img">
+                    <div class="image-caption">Lifelong Life Lessons</div>
+                </div>
+
+                <!-- Image 6 -->
+                <div class="image-item">
+                    <img src="Matheus’ Pomodoro Technique.png" alt="Life" class="grid-img">
+                    <div class="image-caption">Pomodoro</div>
+                </div>
+
+                <!-- Image 6 -->
+                <div class="image-item">
+                    <img src="mindful.png" alt="Life" class="grid-img">
+                    <div class="image-caption">Mindfulness</div>
+                </div>
+
+                <!-- Image 6 -->
+                <div class="image-item">
+                    <img src="nap.png" alt="Life" class="grid-img">
+                    <div class="image-caption">Napping</div>
+                </div>
+
+                <!-- Image 6 -->
+                <div class="image-item">
+                    <img src="quit.png" alt="Life" class="grid-img">
+                    <div class="image-caption">Quitting</div>
+                </div>
+
+                <!-- Image 6 -->
+                <div class="image-item">
+                    <img src="reading.png" alt="Life" class="grid-img">
+                    <div class="image-caption">Reading</div>
+                </div>
+
+                <!-- Image 6 -->
+                <div class="image-item">
+                    <img src="socialmedia.png" alt="Life" class="grid-img">
+                    <div class="image-caption">Social Media</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <div class="container">
+            <h2 class="section-title">Comprehensive <span>Slides</span></h2>
+            <div class="image-grid">
+                <!-- Week 2 -->
+                <div class="image-item">
+                    <img src="week2.png" alt="Week 2" class="grid-img">
+                    <div class="image-caption">Week 2</div>
+                </div>
+
+                <!-- Week 3 -->
+                <div class="image-item">
+                    <img src="week3.png" alt="Week 3" class="grid-img">
+                    <div class="image-caption">Week 3</div>
+                </div>
+
+                <!-- Week 6 -->
+                <div class="image-item">
+                    <img src="week6.png" alt="Week 6" class="grid-img">
+                    <div class="image-caption">Week 6</div>
+                </div>
+
+                <!-- Week 8 -->
+                <div class="image-item">
+                    <img src="week8.png" alt="Week 8" class="grid-img">
+                    <div class="image-caption">Week 8</div>
+                </div>
+
+                <!-- Week 9 -->
+                <div class="image-item">
+                    <img src="week9.png" alt="Week 9" class="grid-img">
+                    <div class="image-caption">Week 9</div>
+                </div>
+
+                <!-- Week 10 -->
+                <div class="image-item">
+                    <img src="week10.png" alt="Week 10" class="grid-img">
+                    <div class="image-caption">Week 10</div>
+                </div>
+
+                <!-- Week 11 -->
+                <div class="image-item">
+                    <img src="week11.png" alt="Week 11" class="grid-img">
+                    <div class="image-caption">Week 11</div>
+                </div>
+
+                <!-- Week 12 -->
+                <div class="image-item">
+                    <img src="week12.png" alt="Week 12" class="grid-img">
+                    <div class="image-caption">Week 12</div>
+                </div>
+
+                <!-- Week 13 -->
+                <div class="image-item">
+                    <img src="week13.png" alt="Week 13" class="grid-img">
+                    <div class="image-caption">Week 13</div>
+                </div>
+
+                <!-- Week 14 -->
+                <div class="image-item">
+                    <img src="week14.png" alt="Week 14" class="grid-img">
+                    <div class="image-caption">Week 14</div>
+                </div>
+
+                <!-- Week 15 -->
+                <div class="image-item">
+                    <img src="week15.png" alt="Week 15" class="grid-img">
+                    <div class="image-caption">Week 15</div>
+                </div>
+
+                <!-- Week 16 -->
+                <div class="image-item">
+                    <img src="week16.png" alt="Week 16" class="grid-img">
+                    <div class="image-caption">Week 16</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3 class="footer-title">Matheus' Math Journey</h3>
+                    <p>A collection of my mathematical journey, including slides, and memorable ideas.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">f</a>
+                        <a href="#" class="social-icon">in</a>
+                        <a href="#" class="social-icon">ig</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#notes">Notes</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-links">
+                        <li>Email: matheussouza@my.smccd.edu</li>
+                        <li>College of San Mateo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 200000000025 Nintendo. All rights reserved</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
